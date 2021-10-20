@@ -72,6 +72,11 @@ export default {
           icon: "mdi-chart-bubble",
           title: "Profile",
           to: "/profile"
+        },
+        {
+          icon: "mdi-wrench",
+          title: "Login",
+          to: "/login"
         }
       ],
       miniVariant: false,
