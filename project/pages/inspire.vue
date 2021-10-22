@@ -1,23 +1,25 @@
 <template>
-  <v-row>
-    <div class="white-outer">
-      <div class="black-box">
-        <div>
-          <h1>
-            Grateful Days
-            <span class="title">/Dragon Ash(1999)</span>
-          </h1>
-        </div>
-        <div class="lyric">
-          <p>俺は東京生まれHIPHOP育ち</p>
-          <p>悪そうな奴は大体友達</p>
-          <p>悪そうな奴と大体同じ</p>
-          <p>裏の道</p>
-          <p>歩き見てきたこの街</p>
+  <v-app>
+    <v-row>
+      <div class="white-outer">
+        <div class="black-box">
+          <div>
+            <h1>
+              Grateful Days
+              <span class="title">/Dragon Ash(1999)</span>
+            </h1>
+          </div>
+          <div class="lyric">
+            <p>俺は東京生まれHIPHOP育ち</p>
+            <p>悪そうな奴は大体友達</p>
+            <p>悪そうな奴と大体同じ</p>
+            <p>裏の道</p>
+            <p>歩き見てきたこの街</p>
+          </div>
         </div>
       </div>
-    </div>
-  </v-row>
+    </v-row>
+  </v-app>
 </template>
 
 <style scoped lang="scss">
