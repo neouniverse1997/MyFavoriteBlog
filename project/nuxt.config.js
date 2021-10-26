@@ -34,6 +34,13 @@ export default {
   plugins: [
   ],
 
+  // publicRuntimeConfig: {
+  //   BASE_URL: process.env.BASE_URL
+  // },
+  // privateRuntimeConfig: {
+  //   API_SECRET: process.env.API_SECRET
+  // },
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 

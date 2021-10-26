@@ -70,13 +70,18 @@ export default {
         },
         {
           icon: "mdi-chart-bubble",
-          title: "Profile",
-          to: "/profile"
+          title: "Tags",
+          to: "/tag_index"
         },
         {
           icon: "mdi-wrench",
           title: "Login",
           to: "/login"
+        },
+        {
+          icon: "mdi-wrench",
+          title: "Article",
+          to: "/article_index"
         }
       ],
       miniVariant: false,

@@ -6,7 +6,7 @@
         <v-flex xs12 sm4>
           <v-card>
             <v-card-title id="two-way-binding">
-              <p>{{ profile }}</p>
+              <p>{{ profile }}aa</p>
             </v-card-title>
             <v-card-text>
               <v-form>
@@ -46,7 +46,7 @@ type UserType = {
 // 型推論が有効
 @Component
 export default class MyComponent extends Vue {
-  private msg = "サンプルメッセージ";
+  private msg = "サンプルメッセージaa";
   private users: Array<string> = ["山田", "田中"];
   private userLogin: LoginType = { username: "", password: "" };
   private userInfo: UserType = { name: "masaya", year: 1997 };
