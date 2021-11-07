@@ -16,24 +16,46 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import { ArticleInterface, IErrorResponse } from "../types/interface";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Article extends Vue {
+  private limit: number = 3;
+  private categoryId: number = 1;
+  private categoryList: string[] = [
+    "sports",
+    "subculture",
+    "economics",
+    "politics",
+    "music",
+    "science",
+    "information_techonology",
+    "architecture",
+    "psychology"
+  ];
+
+  createQuery(query: string) {
+    return `get_articles${query}`;
+  }
+
   created() {
+    // クエリ条件指定
+    const query: string =
+      this.categoryId !== undefined
+        ? `?filters=category[contains]${
+            this.categoryList[this.categoryId - 1]
+          }[and]limit=${this.limit}`
+        : `limit=${this.limit}`;
+
+    // MicroCMSでのAPI使用方法
+    // https://document.microcms.io/content-api/get-list-contents
     const getArticle = async () => {
-      const returnData = await axios.get(
-        "https://neouniverse.microcms.io/api/v1/article",
-        {
-          headers: {
-            "X-MICROCMS-API-KEY": "c9c09375469449c5a0b2dbbf6eba0cb5cd1d"
-          }
-        }
-      );
-      console.log(returnData);
-      return returnData;
+      // $axiosRepositoryの型が設定されていない（要修正）
+      const res = await this.$axiosRepository.get(this.createQuery(query));
+      console.log(res);
     };
+
     getArticle();
   }
 }

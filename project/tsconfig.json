@@ -25,7 +25,9 @@
     },
     "types": [
       "@nuxt/types",
-      "@types/node"
+      "@types/node",
+      // $axiosを扱いたい
+      "@nuxtjs/axios"
     ],
   },
   "exclude": [

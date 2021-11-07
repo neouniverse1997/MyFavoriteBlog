@@ -9,7 +9,6 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "axios": "^0.23.0",
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
     "vuetify": "^2.5.5"
@@ -17,9 +16,12 @@
   "devDependencies": {
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
-    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxt/typescript-runtime": "^2.1.0",
+    "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/vuetify": "^1.12.1",
     "@types/node": "^16.11.6",
+    "microcms-typescript": "^1.0.10",
+    "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
     "webpack-hot-middleware": "^2.25.1"
   }

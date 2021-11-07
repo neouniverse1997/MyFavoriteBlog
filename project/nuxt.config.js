@@ -5,6 +5,14 @@ export default {
     host: '0', // デフォルト: localhost
     port: 3000,// デフォルト: 3000
   },
+
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'https://nuxtjs.org',
+    apiSecret: process.env.API_SECRET,
+  },
+  privateRuntimeConfig: {
+  },
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -32,14 +40,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/axios.ts' },
   ],
-
-  // publicRuntimeConfig: {
-  //   BASE_URL: process.env.BASE_URL
-  // },
-  // privateRuntimeConfig: {
-  //   API_SECRET: process.env.API_SECRET
-  // },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -54,6 +56,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
