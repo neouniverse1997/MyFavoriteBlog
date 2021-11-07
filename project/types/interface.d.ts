@@ -1,4 +1,11 @@
 // 記事を返した時の型
+export interface ResponseInterface {
+    contents: Array<ArticleInterface>,
+    limit: number,
+    offset: number,
+    totalCount: number,
+}
+
 export interface ArticleInterface {
     id: string;
     title: string;

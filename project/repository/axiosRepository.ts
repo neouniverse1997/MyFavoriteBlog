@@ -1,4 +1,5 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
+import { IErrorResponse, ResponseInterface } from "../types/interface"
 
 // 大きな目的
 // 「コンポーネントの疎結合（処理同士の干渉を極力少なくする）のコードを目指す」
@@ -21,7 +22,11 @@ export class AxiosRepository {
 
     // 情報の取得
     public async get(uri: string) {
-        const res = await this.axios.$get(uri)
-        return res
+        try {
+            const response: ResponseInterface = await this.axios.$get(uri)
+            return response.contents;
+        } catch (e) {
+            return Promise.reject(e);
+        }
     }
 }

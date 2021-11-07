@@ -34,6 +34,7 @@ export default class Article extends Vue {
     "architecture",
     "psychology"
   ];
+  private articles: ArticleInterface[] = [];
 
   createQuery(query: string) {
     return `get_articles${query}`;
@@ -50,13 +51,14 @@ export default class Article extends Vue {
 
     // MicroCMSでのAPI使用方法
     // https://document.microcms.io/content-api/get-list-contents
-    const getArticle = async () => {
+    const article = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
-      const res = await this.$axiosRepository.get(this.createQuery(query));
-      console.log(res);
+      const res: ArticleInterface[] = await this.$axiosRepository.get(
+        this.createQuery(query)
+      );
+      this.articles = res;
     };
-
-    getArticle();
+    article();
   }
 }
 </script>

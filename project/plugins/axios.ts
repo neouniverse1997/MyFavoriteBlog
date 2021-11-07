@@ -22,22 +22,24 @@ export const repositoryPlugin: Plugin = (context, inject): void => {
         },
     })
 
-
+    // レスポンスを受ける前処理
     api.interceptors.response.use(
-        function (response) {
-            console.log(response);
+        (response) => {
             return response
         },
-        function (error) {
+        (error) => {
             if (!error.response) {
-                console.log(error)
-                return error
+                // console.log('Error response undefinded');
+            }
+            // サーバーサイドからのレスポンスが、401の時は401ページに飛ぶ。等の操作ができる
+            if (error.response && error.response.status === 401) {
+                console.log('401 Error');
             }
             // サーバーサイドからのレスポンスが、404の時は404ページに飛ぶ。等の操作ができる
-            if (error.response.status === 404) {
+            if (error.response && error.response.status === 404) {
                 console.log('404 Error');
             }
-            return error.response
+            return error.response ? error.response : Promise.reject(new Error(error));
         }
     )
 
