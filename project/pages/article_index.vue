@@ -4,8 +4,18 @@
     <!-- <div class="hidden-md-and-down"> -->
     <v-container fluid>
       <v-layout wrap>
-        <v-flex xs12 sm6 md4>
-          <v-card class="pa-2 ma-2 mx-2"></v-card>
+        <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
+          <v-hover v-slot:default="{ hover }">
+            <v-card class="pa-2 ma-2 mx-2" color="white">
+              <v-toolbar-title class="text-h6 black--text pl-2">{{article.title}}</v-toolbar-title>
+              <v-img class="show-img" :src="article.image.url" />
+              <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
+                <v-btn icon color="black" onclick="alert('詳細を見る')">
+                  <v-icon>mdi-account</v-icon>詳細を見る
+                </v-btn>
+              </div>
+            </v-card>
+          </v-hover>
         </v-flex>
       </v-layout>
     </v-container>
@@ -15,6 +25,34 @@
   </v-app>
 </template>
 
+<style lang="scss" scoped>
+.show-img {
+  margin: 1em 1em 1em 1em;
+}
+
+.show-detail {
+  width: 100px;
+  margin: 1em 1em 1em 1em;
+
+  border-radius: 17px 17px 0 0;
+  background-color: lightblue;
+
+  &:hover {
+    background-color: blue;
+  }
+}
+
+.effect-fade {
+  opacity: 0;
+  width: 0;
+}
+
+.effect-in {
+  opacity: 1;
+  width: 100px;
+}
+</style>
+
 <script lang="ts">
 import { ArticleInterface, IErrorResponse } from "../types/interface";
 import { Component, Vue } from "vue-property-decorator";
@@ -22,7 +60,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Article extends Vue {
   private limit: number = 3;
-  private categoryId: number = 1;
+  private categoryId: number | undefined = undefined;
   private categoryList: string[] = [
     "sports",
     "subculture",
@@ -47,18 +85,19 @@ export default class Article extends Vue {
         ? `?filters=category[contains]${
             this.categoryList[this.categoryId - 1]
           }[and]limit=${this.limit}`
-        : `limit=${this.limit}`;
+        : `?limit=${this.limit}`;
 
+    // 共通Axiosレポジトリより取得関数実行
     // MicroCMSでのAPI使用方法
     // https://document.microcms.io/content-api/get-list-contents
-    const article = async () => {
+    const getArticles = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
       const res: ArticleInterface[] = await this.$axiosRepository.get(
         this.createQuery(query)
       );
       this.articles = res;
     };
-    article();
+    getArticles();
   }
 }
 </script>
