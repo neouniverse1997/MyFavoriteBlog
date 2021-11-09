@@ -5,17 +5,26 @@
     <v-container fluid>
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
-          <v-hover v-slot:default="{ hover }">
-            <v-card class="pa-2 ma-2 mx-2" color="white">
-              <v-toolbar-title class="text-h6 black--text pl-2">{{article.title}}</v-toolbar-title>
-              <v-img class="show-img" :src="article.image.url" />
-              <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
-                <v-btn icon color="black" onclick="alert('詳細を見る')">
-                  <v-icon>mdi-account</v-icon>詳細を見る
-                </v-btn>
-              </div>
+          <v-dialog v-model="dialog" scrollable max-width="300px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-hover v-slot:default="{ hover }">
+                <v-card class="pa-2 ma-2 mx-2" color="white">
+                  <v-toolbar-title class="text-h6 black--text pl-2">{{article.title}}</v-toolbar-title>
+                  <v-img class="show-img" :src="article.image.url" />
+                  <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
+                    <v-btn icon color="black" v-bind="attrs" v-on="on">
+                      <v-icon>mdi-account</v-icon>詳細を見る
+                    </v-btn>
+                  </div>
+                </v-card>
+              </v-hover>
+            </template>
+            <v-card>
+              <v-card-title>{{article.title}}</v-card-title>
+              <v-divider></v-divider>
+              <v-card-text style="height: 30px;">{{article.contents}}</v-card-text>
             </v-card>
-          </v-hover>
+          </v-dialog>
         </v-flex>
       </v-layout>
     </v-container>
@@ -60,6 +69,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Article extends Vue {
   private limit: number = 3;
+  private dialog: boolean = false;
   private categoryId: number | undefined = undefined;
   private categoryList: string[] = [
     "sports",
