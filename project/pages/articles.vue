@@ -29,13 +29,10 @@
             <!-- 以下、ボタン押した時に表示されるダイアログ -->
             <v-card v-if="currentArticle" class="pa-1">
               <v-card-title class="headline text-center pb-3">{{currentArticle.title}}</v-card-title>
-              <v-card-subtitle　class="py-3">作成日　: {{createDateTime(currentArticle.updatedAt)}}</v-card-subtitle>
+              <v-card-subtitle class="py-3">作成日 : {{createDateTime(currentArticle.updatedAt)}}</v-card-subtitle>
               <v-divider></v-divider>
               <!-- <v-img class="show-img" width="50rem" :src="currentArticle.image.url" /> -->
               <v-card-text min-height="50em" style="background-color: white;">
-                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
-                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
-                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
                 <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
               </v-card-text>
               <v-divider></v-divider>
@@ -71,7 +68,7 @@
 }
 
 .effect-fade {
-  　opacity: 0;
+  opacity: 0;
   width: 0;
 }
 
@@ -123,6 +120,9 @@ export default class Article extends Vue {
   }
 
   created() {
+    // カテゴリIDを取得
+    this.categoryId = parseInt(this.$route.query.tags);
+
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     const query: string =

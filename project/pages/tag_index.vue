@@ -6,7 +6,7 @@
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="content in contents" v-bind:key="content.title">
           <v-card class="pa-2 ma-2 mx-2" :color="content.color">
-            <v-btn text color="teal accent-4" @click="onClickButton()">Cilck</v-btn>
+            <nuxt-link :to="{ path: 'articles', query: { tags: content.id }}">{{content.title}}へ</nuxt-link>
             <v-img :src="content.image">
               <v-toolbar-title class="text-h6 white--text pl-2">{{content.title}}</v-toolbar-title>
             </v-img>
@@ -31,14 +31,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-
-// profileページで表示されるROOT_CONTENTS
-interface rootContent {
-  title: string;
-  image: string;
-  explain: string;
-  color: string;
-}
+import { rootContent } from "../types/interface";
 
 @Component
 export default class profileClass extends Vue {
@@ -49,65 +42,68 @@ export default class profileClass extends Vue {
   ];
   private contents: rootContent[] = [
     {
+      id: 1,
       title: "Sports",
       image: this.images[0],
       explain: this.explain[0],
       color: "red"
     },
     {
+      id: 2,
       title: "Subculture",
       image: this.images[0],
       explain: this.explain[0],
       color: "orange"
     },
     {
+      id: 3,
       title: "Economics",
       image: this.images[0],
       explain: this.explain[0],
       color: "yellow"
     },
     {
+      id: 4,
       title: "Politics",
       image: this.images[0],
       explain: this.explain[0],
       color: "green"
     },
     {
+      id: 5,
       title: "Music",
       image: this.images[0],
       explain: this.explain[0],
       color: "green"
     },
     {
+      id: 6,
       title: "Science",
       image: this.images[0],
       explain: this.explain[0],
       color: "blue"
     },
     {
+      id: 7,
       title: "Information Techonology",
       image: this.images[0],
       explain: this.explain[0],
       color: "blue"
     },
     {
+      id: 8,
       title: "Architecture",
       image: this.images[0],
       explain: this.explain[0],
       color: "pink"
     },
     {
+      id: 9,
       title: "Psychology",
       image: this.images[0],
       explain: this.explain[0],
       color: "pink"
     }
   ];
-
-  onClickButton() {
-    // ボタンが押された時の処理
-    this.reveal = true;
-    console.log(`IDを渡して次のページへ飛ぶ: ${this.reveal}`);
-  }
 }
 </script>

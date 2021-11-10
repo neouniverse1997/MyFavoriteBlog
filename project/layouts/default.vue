@@ -65,23 +65,8 @@ export default {
         },
         {
           icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire"
-        },
-        {
-          icon: "mdi-chart-bubble",
           title: "Tags",
           to: "/tag_index"
-        },
-        {
-          icon: "mdi-wrench",
-          title: "Login",
-          to: "/login"
-        },
-        {
-          icon: "mdi-wrench",
-          title: "Article",
-          to: "/article_index"
         }
       ],
       miniVariant: false,

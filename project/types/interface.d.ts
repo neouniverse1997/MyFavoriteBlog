@@ -1,4 +1,4 @@
-// 記事を返した時の型
+// 記事を返した時のオブジェクト型
 export interface ResponseInterface {
     contents: Array<ArticleInterface>,
     limit: number,
@@ -6,6 +6,7 @@ export interface ResponseInterface {
     totalCount: number,
 }
 
+// 記事のオブジェクト型(article_index.vue)
 export interface ArticleInterface {
     id: string;
     title: string;
@@ -26,4 +27,13 @@ export interface ArticleInterface {
 // エラーを返した時の型
 export interface IErrorResponse {
     error: string;
+}
+
+// タグのオブジェクト型(tag_index.vue)
+export interface rootContent {
+    id: number;
+    title: string;
+    image: string;
+    explain: string;
+    color: string;
 }
