@@ -6,7 +6,7 @@
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
           <!-- 通常時、一覧表示されているページ -->
-          <v-dialog v-model="dialog" max-width="65%" scrollable>
+          <v-dialog v-model="dialog" max-width="75%" scrollable :retain-focus="false">
             <template v-slot:activator="{ on, attr }">
               <v-hover v-slot:default="{ hover }">
                 <v-card class="pa-2 ma-2 mx-2" color="white">
@@ -38,6 +38,10 @@
                 <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
                 <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
               </v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-btn @click="dialog = false">Close</v-btn>
+              </v-card-actions>
             </v-card>
           </v-dialog>
         </v-flex>
