@@ -3,6 +3,7 @@ import { IErrorResponse, ResponseInterface } from "../types/interface"
 
 // 大きな目的
 // 「コンポーネントの疎結合（処理同士の干渉を極力少なくする）のコードを目指す」
+//　「API処理・エラー処理を統一化」」
 // このファイルの目的
 // 「Axios/API通信に関するAPI共通処理クラスを作成」
 // 参考ドキュメント

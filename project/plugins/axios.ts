@@ -14,6 +14,7 @@ import { AxiosRepository } from '@/repository/axiosRepository'
 
 export const repositoryPlugin: Plugin = (context, inject): void => {
 
+    // api関連の情報（APIURLとKEY)を取得し設定
     const api = context.$axios.create({
         // https://nuxtjs.org/tutorials/moving-from-nuxtjs-dotenv-to-runtime-config/
         baseURL: context.$config.baseURL,
@@ -21,27 +22,6 @@ export const repositoryPlugin: Plugin = (context, inject): void => {
             "X-MICROCMS-API-KEY": context.$config.apiSecret,
         },
     })
-
-    // レスポンスを受ける前処理
-    api.interceptors.response.use(
-        (response) => {
-            return response
-        },
-        (error) => {
-            if (!error.response) {
-                // console.log('Error response undefinded');
-            }
-            // サーバーサイドからのレスポンスが、401の時は401ページに飛ぶ。等の操作ができる
-            if (error.response && error.response.status === 401) {
-                console.log('401 Error');
-            }
-            // サーバーサイドからのレスポンスが、404の時は404ページに飛ぶ。等の操作ができる
-            if (error.response && error.response.status === 404) {
-                console.log('404 Error');
-            }
-            return error.response ? error.response : Promise.reject(new Error(error));
-        }
-    )
 
     // VueインスタンスでInject化
     const axiosRepository = new AxiosRepository(api)

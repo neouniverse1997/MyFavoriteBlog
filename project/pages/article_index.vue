@@ -5,24 +5,39 @@
     <v-container fluid>
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
-          <v-dialog v-model="dialog" scrollable max-width="300px">
-            <template v-slot:activator="{ on, attrs }">
+          <!-- 通常時、一覧表示されているページ -->
+          <v-dialog v-model="dialog" max-width="65%" scrollable>
+            <template v-slot:activator="{ on, attr }">
               <v-hover v-slot:default="{ hover }">
                 <v-card class="pa-2 ma-2 mx-2" color="white">
                   <v-toolbar-title class="text-h6 black--text pl-2">{{article.title}}</v-toolbar-title>
                   <v-img class="show-img" :src="article.image.url" />
                   <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
-                    <v-btn icon color="black" v-bind="attrs" v-on="on">
+                    <v-btn
+                      icon
+                      color="black"
+                      v-bind="attr"
+                      v-on="on"
+                      @click="onClickButton(article)"
+                    >
                       <v-icon>mdi-account</v-icon>詳細を見る
                     </v-btn>
                   </div>
                 </v-card>
               </v-hover>
             </template>
-            <v-card>
-              <v-card-title>{{article.title}}</v-card-title>
+            <!-- 以下、ボタン押した時に表示されるダイアログ -->
+            <v-card v-if="currentArticle" class="pa-1">
+              <v-card-title class="headline text-center pb-3">{{currentArticle.title}}</v-card-title>
+              <v-card-subtitle　class="py-3">作成日　: {{createDateTime(currentArticle.updatedAt)}}</v-card-subtitle>
               <v-divider></v-divider>
-              <v-card-text style="height: 30px;">{{article.contents}}</v-card-text>
+              <!-- <v-img class="show-img" width="50rem" :src="currentArticle.image.url" /> -->
+              <v-card-text min-height="50em" style="background-color: white;">
+                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
+                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
+                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
+                <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
+              </v-card-text>
             </v-card>
           </v-dialog>
         </v-flex>
@@ -52,7 +67,7 @@
 }
 
 .effect-fade {
-  opacity: 0;
+  　opacity: 0;
   width: 0;
 }
 
@@ -68,9 +83,17 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Article extends Vue {
+  // 取得記事一覧を定義
+  private articles: ArticleInterface[] = [];
+  // 最大取得件数
   private limit: number = 3;
+  // 取得タグ
+  private categoryId: number | null = null;
+  // ダイアログの状態
   private dialog: boolean = false;
-  private categoryId: number | undefined = undefined;
+  // 現在の表示記事
+  private currentArticle: ArticleInterface | null = null;
+
   private categoryList: string[] = [
     "sports",
     "subculture",
@@ -82,20 +105,28 @@ export default class Article extends Vue {
     "architecture",
     "psychology"
   ];
-  private articles: ArticleInterface[] = [];
 
-  createQuery(query: string) {
+  createDateTime(dateString: string): string {
+    let format: string = "YYYY年MM月DD日";
+    format = format.replace(/YYYY/g, dateString.slice(0, 4));
+    format = format.replace(/MM/g, dateString.slice(5, 7));
+    format = format.replace(/DD/g, dateString.slice(8, 10));
+    return format;
+  }
+
+  createQuery(query: string): string {
     return `get_articles${query}`;
   }
 
   created() {
     // クエリ条件指定
+    // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     const query: string =
-      this.categoryId !== undefined
-        ? `?filters=category[contains]${
+      this.categoryId === null
+        ? `?limit=${this.limit}`
+        : `?filters=category[contains]${
             this.categoryList[this.categoryId - 1]
-          }[and]limit=${this.limit}`
-        : `?limit=${this.limit}`;
+          }[and]limit=${this.limit}`;
 
     // 共通Axiosレポジトリより取得関数実行
     // MicroCMSでのAPI使用方法
@@ -108,6 +139,11 @@ export default class Article extends Vue {
       this.articles = res;
     };
     getArticles();
+  }
+
+  // ボタンを押した時に表示したい詳細記事
+  onClickButton(selected_article: ArticleInterface) {
+    this.currentArticle = selected_article;
   }
 }
 </script>

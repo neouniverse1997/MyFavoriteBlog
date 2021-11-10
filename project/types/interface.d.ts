@@ -17,7 +17,7 @@ export interface ArticleInterface {
         width: number;
     }
     | undefined;
-    tags: string | undefined;
+    tags?: string;
     publishedAt: Date;
     revisedAt: Date;
     updatedAt: Date;
