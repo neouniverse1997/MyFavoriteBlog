@@ -19,6 +19,7 @@ export interface ArticleInterface {
     }
     | undefined;
     tags?: string;
+    createdAt: Date;
     publishedAt: Date;
     revisedAt: Date;
     updatedAt: Date;
@@ -30,10 +31,18 @@ export interface IErrorResponse {
 }
 
 // タグのオブジェクト型(tag_index.vue)
-export interface rootContent {
-    id: number;
-    title: string;
-    image: string;
-    explain: string;
-    color: string;
+export interface CategoryInterface {
+    id: string;
+    category_id: string;
+    category_name: string;
+    category_image: {
+        imageURL: string;
+        height: number;
+        width: number;
+    }
+    category_explain: string;
+    createdAt: Date;
+    publishedAt: Date;
+    revisedAt: Date;
+    updatedAt: Date;
 }
