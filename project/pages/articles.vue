@@ -89,7 +89,7 @@ export default class Article extends Vue {
   // 最大取得件数
   private limit: number = 3;
   // 取得タグ
-  private categoryId: number | null = null;
+  private categoryName: string | null = null;
   // ダイアログの状態
   private dialog: boolean = false;
   // 現在の表示記事
@@ -121,16 +121,14 @@ export default class Article extends Vue {
 
   created() {
     // カテゴリIDを取得
-    this.categoryId = parseInt(this.$route.query.tags);
+    this.categoryName = this.$route.query.categories_query;
 
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     const query: string =
-      this.categoryId === null
+      this.categoryName === null
         ? `?limit=${this.limit}`
-        : `?filters=category[contains]${
-            this.categoryList[this.categoryId - 1]
-          }[and]limit=${this.limit}`;
+        : `?filters=category[contains]${this.categoryName}[and]limit=${this.limit}`;
 
     // 共通Axiosレポジトリより取得関数実行
     // MicroCMSでのAPI使用方法

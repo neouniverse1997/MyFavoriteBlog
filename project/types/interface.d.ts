@@ -30,13 +30,15 @@ export interface IErrorResponse {
     error: string;
 }
 
-// タグのオブジェクト型(tag_index.vue)
+// カテゴリのオブジェクト型(category_index.vue)
 export interface CategoryInterface {
+    // 文字列型ID
     id: string;
+    // 以下を主に使用
     category_id: string;
     category_name: string;
     category_image: {
-        imageURL: string;
+        url: string;
         height: number;
         width: number;
     }

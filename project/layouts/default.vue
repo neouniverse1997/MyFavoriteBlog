@@ -65,8 +65,8 @@ export default {
         },
         {
           icon: "mdi-chart-bubble",
-          title: "Tags",
-          to: "/tag_index"
+          title: "Category",
+          to: "/category"
         }
       ],
       miniVariant: false,

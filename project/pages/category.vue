@@ -7,9 +7,9 @@
         <v-flex xs12 sm6 md4 v-for="category in categories" v-bind:key="category.category_id">
           <v-card class="pa-2 ma-2 mx-2">
             <nuxt-link
-              :to="{ path: 'articles', query: { tags: category.category_id }}"
-            >{{category.category_title}}へ</nuxt-link>
-            <v-img :src="category.category_image.imageURL">
+              :to="{ path: 'articles', query: { categories_query: category.category_name }}"
+            >{{category.category_name}}へ</nuxt-link>
+            <v-img :src="category.category_image.url">
               <v-toolbar-title class="text-h6 white--text pl-2">{{category.category_title}}</v-toolbar-title>
             </v-img>
             <v-card-subtitle>{{category.category_explain}}</v-card-subtitle>
@@ -37,12 +37,13 @@ import { CategoryInterface } from "../types/interface";
 
 @Component
 export default class profileClass extends Vue {
-  private reveal: boolean = false;
+  // API取得クエリ
   private query: string = "category";
   // 取得カテゴリ一覧を定義
   private categories: CategoryInterface[] = [];
 
   created() {
+    // 一覧表示に向けてカテゴリを取得
     const getCategory = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
       let res: CategoryInterface[] = await this.$axiosRepository.get(
@@ -50,15 +51,13 @@ export default class profileClass extends Vue {
       );
 
       // 取得順をID順に変更するタスク
-      let result = Object.keys(res)
-        .map(function(key) {
-          return res[key];
-        })
-        .sort(function(a: CategoryInterface, b: CategoryInterface) {
-          return a.id < b.id ? -1 : 1;
-        });
+      let result = res.sort(function(
+        a: CategoryInterface,
+        b: CategoryInterface
+      ) {
+        return a.category_id > b.category_id ? 1 : -1;
+      });
       this.categories = result;
-      console.log(this.categories[0].category_image.imageURL);
     };
     getCategory();
   }
