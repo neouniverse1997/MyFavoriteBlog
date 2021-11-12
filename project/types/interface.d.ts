@@ -1,17 +1,15 @@
 // 記事を返した時のオブジェクト型
-export interface ResponseInterface {
-    contents: Array<ArticleInterface>,
+export interface ResponseInterface<T> {
+    contents: Array<T>,
     limit: number,
     offset: number,
     totalCount: number,
 }
 
-// 記事のオブジェクト型(article_index.vue)
-export interface ArticleInterface {
+// 共通のオブジェクト型
+export interface CommonInterface {
     id: string;
     title: string;
-    contents: string;
-    url: string;
     image:
     | {
         imageURL: string;
@@ -19,33 +17,27 @@ export interface ArticleInterface {
         width: number;
     }
     | undefined;
-    tags?: string;
     createdAt: Date;
     publishedAt: Date;
     revisedAt: Date;
     updatedAt: Date;
+}
+
+// 記事のオブジェクト型(article.vue)
+export interface ArticleInterface extends CommonInterface {
+    contents: string;
+    category: string;
+    url?: string;
+}
+
+// カテゴリのオブジェクト型(category.vue)
+export interface CategoryInterface extends CommonInterface {
+    // 文字列型ID
+    category_id: number;
+    category_explain: string;
 }
 
 // エラーを返した時の型
 export interface IErrorResponse {
     error: string;
-}
-
-// カテゴリのオブジェクト型(category_index.vue)
-export interface CategoryInterface {
-    // 文字列型ID
-    id: string;
-    // 以下を主に使用
-    category_id: string;
-    category_name: string;
-    category_image: {
-        url: string;
-        height: number;
-        width: number;
-    }
-    category_explain: string;
-    createdAt: Date;
-    publishedAt: Date;
-    revisedAt: Date;
-    updatedAt: Date;
 }

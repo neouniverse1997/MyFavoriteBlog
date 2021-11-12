@@ -29,24 +29,3 @@ export const repositoryPlugin: Plugin = (context, inject): void => {
 };
 
 export default repositoryPlugin
-
-// TypeScriptでの動作のために型定義
-// Vueインスタンスから$axiosRepositoryを使用可能に
-
-declare module 'vue/types/vue' {
-    interface Vue {
-        readonly $axiosRepository: AxiosRepository
-    }
-}
-
-// this.$nuxt.contextから$axiosRepositoryを使用可能に
-
-declare module '@nuxt/types' {
-    interface NuxtAppOptions {
-        readonly $axiosRepository: AxiosRepository
-    }
-
-    interface Context {
-        readonly $axiosRepository: AxiosRepository
-    }
-}

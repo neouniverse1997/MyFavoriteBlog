@@ -82,21 +82,36 @@
 </style>
 
 <script lang="ts">
-import { ArticleInterface, IErrorResponse } from "../types/interface";
+import { ArticleInterface, ResponseInterface } from "../types/interface";
 import { Component, Vue } from "vue-property-decorator";
+
+import { AxiosRepository } from "../repository/axiosRepository";
+import VueRouter, { Route } from "vue-router";
+declare module "vue/types/vue" {
+  interface Vue {
+    $router: VueRouter;
+    $route: Route;
+    readonly $axiosRepository: AxiosRepository;
+  }
+}
 
 @Component
 export default class Article extends Vue {
   // 取得記事一覧を定義
   private articles: ArticleInterface[] = [];
+
   // 最大取得件数
   private limit: number = 3;
+
   // 取得タグ
   private categoryName: string | null = null;
+
   // ダイアログの状態
   private dialog: boolean = false;
+
   // 現在の表示記事
   private currentArticle: ArticleInterface | null = null;
+
   // 時間表示関数
   createDateTime(dateString: string): string {
     let format: string = "YYYY年MM月DD日";
@@ -105,28 +120,33 @@ export default class Article extends Vue {
     format = format.replace(/DD/g, dateString.slice(8, 10));
     return format;
   }
+
   // クエリ作成関数
   createQuery(query: string): string {
     return `get_articles${query}`;
   }
+
   created() {
     // カテゴリIDを取得
-    this.categoryName = this.$route.query.categories_query;
+    const category_query: string | string[] | null = this.$route.query
+      .categories_query;
+
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
+    this.categoryName =
+      typeof category_query == "string" ? category_query : category_query[0];
     const query: string =
       this.categoryName === null
         ? `?limit=${this.limit}`
         : `?filters=category[contains]${this.categoryName}[and]limit=${this.limit}`;
+
     // 共通Axiosレポジトリより取得関数実行関数
     // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
     const getArticles = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
-      const res: ArticleInterface[] = await this.$axiosRepository.get(
-        this.createQuery(query)
-      );
-      this.articles = res;
+      this.articles = await this.$axiosRepository.get(this.createQuery(query));
     };
+
     getArticles();
   }
   // ボタンを押した時に表示したい詳細記事
