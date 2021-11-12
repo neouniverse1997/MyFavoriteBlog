@@ -23,6 +23,9 @@
                       <v-icon>mdi-account</v-icon>詳細を見る
                     </v-btn>
                   </div>
+                  <div v-if="article.url!==undefined">
+                    <v-btn :href="article.url" target="_blank">マーケットページへ</v-btn>
+                  </div>
                 </v-card>
               </v-hover>
             </template>
@@ -94,19 +97,7 @@ export default class Article extends Vue {
   private dialog: boolean = false;
   // 現在の表示記事
   private currentArticle: ArticleInterface | null = null;
-
-  private categoryList: string[] = [
-    "sports",
-    "subculture",
-    "economics",
-    "politics",
-    "music",
-    "science",
-    "information_techonology",
-    "architecture",
-    "psychology"
-  ];
-
+  // 時間表示関数
   createDateTime(dateString: string): string {
     let format: string = "YYYY年MM月DD日";
     format = format.replace(/YYYY/g, dateString.slice(0, 4));
@@ -114,25 +105,21 @@ export default class Article extends Vue {
     format = format.replace(/DD/g, dateString.slice(8, 10));
     return format;
   }
-
+  // クエリ作成関数
   createQuery(query: string): string {
     return `get_articles${query}`;
   }
-
   created() {
     // カテゴリIDを取得
     this.categoryName = this.$route.query.categories_query;
-
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     const query: string =
       this.categoryName === null
         ? `?limit=${this.limit}`
         : `?filters=category[contains]${this.categoryName}[and]limit=${this.limit}`;
-
-    // 共通Axiosレポジトリより取得関数実行
-    // MicroCMSでのAPI使用方法
-    // https://document.microcms.io/content-api/get-list-contents
+    // 共通Axiosレポジトリより取得関数実行関数
+    // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
     const getArticles = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
       const res: ArticleInterface[] = await this.$axiosRepository.get(
@@ -142,7 +129,6 @@ export default class Article extends Vue {
     };
     getArticles();
   }
-
   // ボタンを押した時に表示したい詳細記事
   onClickButton(selected_article: ArticleInterface) {
     this.currentArticle = selected_article;

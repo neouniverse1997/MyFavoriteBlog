@@ -49,7 +49,6 @@ export default class profileClass extends Vue {
       let res: CategoryInterface[] = await this.$axiosRepository.get(
         this.query
       );
-
       // 取得順をID順に変更するタスク
       let result = res.sort(function(
         a: CategoryInterface,

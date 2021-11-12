@@ -11,6 +11,7 @@ export interface ArticleInterface {
     id: string;
     title: string;
     contents: string;
+    url: string;
     image:
     | {
         imageURL: string;
