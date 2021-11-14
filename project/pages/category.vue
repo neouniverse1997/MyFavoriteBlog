@@ -4,7 +4,7 @@
     <!-- <div class="hidden-md-and-down"> -->
     <v-container fluid>
       <div class="index-title">
-        <div class="index-title-text">Categories</div>
+        <div class="index-title-text">CATEGORIES</div>
       </div>
       <!-- wrap = 要素が幅の限り横に並べるようなレイアウト -->
       <v-layout wrap>

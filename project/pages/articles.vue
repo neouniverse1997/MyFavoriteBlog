@@ -108,7 +108,7 @@
     // 選択カテゴリ名
     .index-category-text {
       display: inline;
-      font: 3em "Arial Black";
+      font: 2em "Arial Black";
       font-weight: 500;
       color: #1a237e;
     }
