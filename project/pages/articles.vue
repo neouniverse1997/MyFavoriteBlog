@@ -10,7 +10,6 @@
             <template v-slot:activator="{ on, attr }">
               <v-hover v-slot:default="{ hover }">
                 <v-card class="pa-2 ma-2 mx-2" color="white">
-                  <v-toolbar-title class="text-h6 black--text pl-2">{{article.title}}</v-toolbar-title>
                   <v-img class="show-img" :src="article.image.url" />
                   <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
                     <v-btn
@@ -106,6 +105,8 @@ export default class Article extends Vue {
   // 取得タグ
   private categoryName: string | null = null;
 
+  private category_query: string | string[] | null;
+
   // ダイアログの状態
   private dialog: boolean = false;
 
@@ -128,13 +129,14 @@ export default class Article extends Vue {
 
   created() {
     // カテゴリIDを取得
-    const category_query: string | string[] | null = this.$route.query
-      .categories_query;
+    this.category_query = this.$route.query.categories_query;
 
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     this.categoryName =
-      typeof category_query == "string" ? category_query : category_query[0];
+      typeof this.category_query == "string"
+        ? this.category_query
+        : this.category_query[0];
     const query: string =
       this.categoryName === null
         ? `?limit=${this.limit}`
