@@ -3,37 +3,63 @@
     <!-- md以下であれば非表示、それ以外では表示 -->
     <!-- <div class="hidden-md-and-down"> -->
     <v-container fluid>
+      <div class="index-title">
+        <div class="index-title-text">
+          Category:
+          <div class="index-category-text">{{categoryName}}</div>
+        </div>
+      </div>
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
           <!-- 通常時、一覧表示されているページ -->
-          <v-dialog v-model="dialog" max-width="75%" scrollable :retain-focus="false">
+          <v-dialog v-model="dialog" max-width="30rem" scrollable :retain-focus="false">
             <template v-slot:activator="{ on, attr }">
               <v-hover v-slot:default="{ hover }">
-                <v-card class="pa-2 ma-2 mx-2" color="white">
-                  <v-img class="show-img" :src="article.image.url" />
-                  <div class="show-detail" :class="hover ? 'effect-in' : 'effect-fade'">
+                <v-card class="ma-2 mx-2" height="22rem">
+                  <v-img
+                    height="15rem"
+                    :src="article.image.url"
+                    :class="{ 'on-hover': hover }"
+                    hover
+                    v-bind="attr"
+                    v-on="on"
+                    @click="onClickButton(article)"
+                  >
+                    <v-expand-transition>
+                      <div
+                        v-if="hover"
+                        class="d-flex transition-fast-in-fast-out v-card--reveal text-h4 yellow--text indigo darken-4"
+                        style="height: 100%;"
+                      >Click!!</div>
+                    </v-expand-transition>
+                  </v-img>
+                  <div v-if="article.url!==undefined">
                     <v-btn
-                      icon
-                      color="black"
-                      v-bind="attr"
-                      v-on="on"
-                      @click="onClickButton(article)"
+                      :href="article.url"
+                      target="_blank"
+                      absolute
+                      class="yellow--text"
+                      fab
+                      large
+                      right
+                      bottom
+                      color="#191970"
                     >
-                      <v-icon>mdi-account</v-icon>詳細を見る
+                      <v-icon>mdi-cart</v-icon>
                     </v-btn>
                   </div>
-                  <div v-if="article.url!==undefined">
-                    <v-btn :href="article.url" target="_blank">マーケットページへ</v-btn>
+                  <div class="card-title-text">{{article.title}}</div>
+                  <div v-if="article.generator!==undefined">
+                    <v-card-subtitle>著者：{{article.generator}}</v-card-subtitle>
                   </div>
                 </v-card>
               </v-hover>
             </template>
             <!-- 以下、ボタン押した時に表示されるダイアログ -->
-            <v-card v-if="currentArticle" class="pa-1">
+            <v-card v-if="currentArticle" class="pa-1 nonhover">
               <v-card-title class="headline text-center pb-3">{{currentArticle.title}}</v-card-title>
               <v-card-subtitle class="py-3">作成日 : {{createDateTime(currentArticle.updatedAt)}}</v-card-subtitle>
               <v-divider></v-divider>
-              <!-- <v-img class="show-img" width="50rem" :src="currentArticle.image.url" /> -->
               <v-card-text min-height="50em" style="background-color: white;">
                 <span class="text-h6 black--text pa-1" v-html="currentArticle.contents"></span>
               </v-card-text>
@@ -53,30 +79,51 @@
 </template>
 
 <style lang="scss" scoped>
-.show-img {
-  margin: 1em 1em 1em 1em;
+// カード
+.v-card {
+  transition: opacity 0.4s ease-in-out;
 }
 
-.show-detail {
-  width: 100px;
-  margin: 1em 1em 1em 1em;
+// hover時の画像の挙動
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+}
 
-  border-radius: 17px 17px 0 0;
-  background-color: lightblue;
+// ページのタイトル部分
+.index-title {
+  display: block;
 
-  &:hover {
-    background-color: blue;
+  .index-title-text {
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    font: 1em "Verdana";
+    color: black;
+
+    // 選択カテゴリ名
+    .index-category-text {
+      display: inline;
+      font: 3em "Arial Black";
+      font-weight: 500;
+      color: #1a237e;
+    }
   }
 }
 
-.effect-fade {
-  opacity: 0;
-  width: 0;
-}
-
-.effect-in {
-  opacity: 1;
-  width: 100px;
+// カードのタイトル部分
+.card-title-text {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 2rem;
+  padding: 0.4rem 0.75rem 0.4rem 0.7rem;
 }
 </style>
 

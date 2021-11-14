@@ -3,8 +3,8 @@
     <!-- md以下であれば非表示、それ以外では表示 -->
     <!-- <div class="hidden-md-and-down"> -->
     <v-container fluid>
-      <div class="category_index-title">
-        <div class="category_index-title-text">Categories</div>
+      <div class="index-title">
+        <div class="index-title-text">Categories</div>
       </div>
       <!-- wrap = 要素が幅の限り横に並べるようなレイアウト -->
       <v-layout wrap>
@@ -53,15 +53,15 @@
 }
 
 // ページのタイトル部分
-.category_index-title {
+.index-title {
   display: block;
 
-  .category_index-title-text {
+  .index-title-text {
     text-align: center;
     margin-top: 5rem;
     margin-bottom: 5rem;
-    font: 1.7em "Verdana";
-    color: #191970;
+    font: 2em "Arial Black";
+    color: #1a237e;
   }
 }
 
