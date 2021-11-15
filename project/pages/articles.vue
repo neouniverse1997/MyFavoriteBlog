@@ -33,19 +33,34 @@
                       >Click!!</div>
                     </v-expand-transition>
                   </v-img>
-                  <div v-if="article.url!==undefined">
+                  <div v-if="article.url!==undefined && article.url_to_media[0]!=='none'">
                     <v-btn
                       :href="article.url"
                       target="_blank"
                       absolute
-                      class="yellow--text"
+                      class="white--text"
                       fab
                       large
                       right
                       bottom
                       color="#191970"
                     >
-                      <v-icon>mdi-cart</v-icon>
+                      <!-- ボタンロゴをリンク先メディアによって変更 -->
+                      <div v-if="article.url_to_media[0]==='marcket'">
+                        <v-icon>mdi-cart</v-icon>
+                      </div>
+                      <div v-else-if="article.url_to_media[0]==='twitter'">
+                        <v-icon>mdi-twitter</v-icon>
+                      </div>
+                      <div v-else-if="article.url_to_media[0]==='github'">
+                        <v-icon>mdi-github</v-icon>
+                      </div>
+                      <div v-else-if="article.url_to_media[0]==='youtube'">
+                        <v-icon>mdi-youtube</v-icon>
+                      </div>
+                      <div v-else>
+                        <v-icon>mdi-book</v-icon>
+                      </div>
                     </v-btn>
                   </div>
                   <div class="card-title-text">{{article.title}}</div>

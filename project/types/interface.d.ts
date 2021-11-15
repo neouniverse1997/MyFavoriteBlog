@@ -27,7 +27,8 @@ export interface CommonInterface {
 export interface ArticleInterface extends CommonInterface {
     contents: string;
     category: string;
-    generator: string;
+    generator?: string;
+    url_to_media?: string[];
     url?: string;
 }
 
