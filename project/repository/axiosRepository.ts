@@ -25,7 +25,7 @@ export class AxiosRepository {
     public async get<T>(uri: string) {
         try {
             const response: ResponseInterface<T> = await this.axios.$get(uri)
-            return response.contents;
+            return response;
         } catch (e) {
             return Promise.reject(e);
         }

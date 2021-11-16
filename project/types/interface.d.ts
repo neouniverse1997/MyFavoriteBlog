@@ -12,7 +12,7 @@ export interface CommonInterface {
     title: string;
     image:
     | {
-        imageURL: string;
+        url: string;
         height: number;
         width: number;
     }

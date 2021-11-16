@@ -10,17 +10,9 @@
       src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
       class="indigo darken-4"
     >
-      <!-- <v-toolbar-title class="yellow--text" v-text="title" /> -->
       <v-spacer />
       <template v-slot:extension>
-        <v-tabs
-          v-model="model"
-          fixed-tabs
-          centered
-          icons-and-text
-          slider-color="yellow"
-          align-with-title
-        >
+        <v-tabs fixed-tabs centered icons-and-text slider-color="yellow" align-with-title>
           <v-tab v-for="(item, i) in items" :key="i" :to="item.to" router exact>{{ item.title }}</v-tab>
         </v-tabs>
       </template>

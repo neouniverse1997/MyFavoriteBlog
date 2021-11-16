@@ -11,7 +11,7 @@
       <v-layout wrap>
         <!-- 記事の一覧画面 -->
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
-          <article-card :article="article" />
+          <article-card :article="article" :imageURL="spareImageURL" />
         </v-flex>
         <v-btn @click="onNextArticles()">次へ</v-btn>
       </v-layout>
@@ -70,6 +70,9 @@ export default class Article extends Vue {
   // 最大取得件数
   private limit: number = 1;
 
+  // 記事数
+  private sum: number = 0;
+
   // 現在のページ
   private page: number = 0;
 
@@ -79,11 +82,15 @@ export default class Article extends Vue {
   // 取得したいカテゴリ
   private categoryTitle: string | string[] | null;
 
-  // クエリ作成関数
-  createQuery(query: string): string {
+  // urlが存在しない時の予備用URL
+  private spareImageURL: string;
+
+  // URI作成関数
+  generateURI(query: string): string {
     return `get_articles${query}`;
   }
 
+  // クエリ作成関数
   generateQuery(
     limit: number,
     page: number,
@@ -91,21 +98,23 @@ export default class Article extends Vue {
   ): string {
     let query: string =
       categoryQuery === null
-        ? `?limit=${limit}&offset=${page}`
-        : `?filters=category[contains]${categoryQuery}[and]limit=${limit}&offset=${page}`;
+        ? `?limit=${limit}&offset=${page}&orders=publishedAt`
+        : `?filters=category[contains]${categoryQuery}&limit=${limit}&offset=${page}&orders=publishedAt`;
     return query!;
   }
 
   created() {
     // カテゴリIDを取得
-    this.categoryTitle = this.$route.query.categoryTitle;
+    this.categoryTitle = this.$route.params.title;
+
+    // 予備用画像を取得
+    // this.spareImageURL = this.$route.params.categoryImageURL;
+    // console.log("url:", this.spareImageURL);
 
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     this.categoryQuery =
-      typeof this.categoryTitle === "string"
-        ? this.categoryTitle
-        : this.categoryTitle[0];
+      typeof this.categoryTitle === "string" ? this.categoryTitle : null;
 
     let api_query: string = this.generateQuery(
       this.limit,
@@ -117,9 +126,11 @@ export default class Article extends Vue {
     // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
     const getArticles = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）
-      this.articles = await this.$axiosRepository.get(
-        this.createQuery(api_query)
+      const res: ResponseInterface<ArticleInterface> = await this.$axiosRepository.get(
+        this.generateURI(api_query)
       );
+      this.articles = res.contents;
+      this.sum = res.totalCount;
     };
 
     getArticles();
@@ -135,7 +146,17 @@ export default class Article extends Vue {
       this.categoryQuery
     );
 
-    console.log(api_query);
+    // 共通Axiosレポジトリより取得関数実行関数
+    // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
+    const getArticles = async () => {
+      // $axiosRepositoryの型が設定されていない（要修正）
+      const res: ResponseInterface<ArticleInterface> = await this.$axiosRepository.get(
+        this.generateURI(api_query)
+      );
+      this.articles = res.contents;
+    };
+
+    getArticles();
   }
 }
 </script>

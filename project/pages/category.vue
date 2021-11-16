@@ -73,9 +73,10 @@ export default class Category extends Vue {
     // 一覧表示に向けてカテゴリを取得
     const getCategory = async () => {
       // $axiosRepositoryの型が設定されていない（要修正）-> vue-shim.d.tsが読み込めていない
-      let categoryList: CategoryInterface[] = await this.$axiosRepository.get(
+      const res: ResponseInterface<CategoryInterface> = await this.$axiosRepository.get(
         this.query
       );
+      let categoryList: CategoryInterface[] = res.contents;
 
       // 取得順をID順に変更するタスク
       let result = categoryList.sort(function(

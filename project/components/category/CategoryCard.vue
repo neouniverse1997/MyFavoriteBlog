@@ -1,11 +1,11 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card
-      :to="{ path: '/articles', query: { categoryTitle: category.title }}"
       class="ma-2 mx-2"
       height="25rem"
       :class="{ 'on-hover': hover }"
       hover
+      @click="onNextCategoryPage()"
     >
       <v-img height="15rem" :src="category.image.url">
         <template v-slot:placeholder>
@@ -28,5 +28,12 @@ import { CategoryInterface } from "../../types/interface";
 export default class CategoryCard extends Vue {
   @Prop({ default: {} })
   category!: CategoryInterface;
+
+  onNextCategoryPage() {
+    this.$router.push({
+      name: "articles",
+      params: { title: this.category.title }
+    });
+  }
 }
 </script>

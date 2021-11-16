@@ -7,13 +7,14 @@
           <!-- 記事を象徴する画像の表示 -->
           <v-img
             height="15rem"
-            :src="article.image.url"
+            :src="imageURL"
             :class="{ 'on-hover': hover }"
             hover
             v-bind="attr"
             v-on="on"
             @click="onClickButton(article)"
           >
+            <!-- hoverするとCLICK画面が表示される -->
             <v-expand-transition>
               <div
                 v-if="hover"
@@ -23,7 +24,9 @@
             </v-expand-transition>
           </v-img>
           <!-- 記事に付随するリンクボタン -->
-          <article-button-to-media :url="article.url" :media="article.url_to_media[0]" />
+          <div v-if="article.url!=undefined">
+            <article-button-to-media :url="article.url" :media="article.url_to_media[0]" />
+          </div>
           <!-- 記事のタイトル・著者の表示 -->
           <div class="card-title-text">{{article.title}}</div>
           <div v-if="article.generator!==undefined">
@@ -74,6 +77,11 @@ export default class ArticleCard extends Vue {
 
   @Prop({ default: {} })
   article!: ArticleInterface;
+  imageURL: string;
+
+  get setImageUrl() {
+    return this.$store.state;
+  }
 
   // ボタンを押した時に表示したい詳細記事
   onClickButton(selected_article: ArticleInterface) {
