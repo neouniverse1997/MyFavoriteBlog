@@ -1,7 +1,5 @@
 <template>
   <v-app>
-    <!-- md以下であれば非表示、それ以外では表示 -->
-    <!-- <div class="hidden-md-and-down"> -->
     <v-container fluid>
       <div class="index-title">
         <div class="index-title-text">CATEGORIES</div>
@@ -9,31 +7,11 @@
       <!-- wrap = 要素が幅の限り横に並べるようなレイアウト -->
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="category in categories" v-bind:key="category.category_id">
-          <v-hover v-slot="{ hover }">
-            <v-card
-              :to="{ path: '/articles', query: { categories_query: category.title }}"
-              class="ma-2 mx-2"
-              height="25rem"
-              :class="{ 'on-hover': hover }"
-              hover
-            >
-              <v-img height="15rem" :src="category.image.url">
-                <template v-slot:placeholder>
-                  <v-row class="fill-height ma-0" align="center" justify="center"></v-row>
-                </template>
-              </v-img>
-              <div class="ma-2">
-                <div class="card-title-text">{{category.title}}</div>
-                <v-card-subtitle>{{category.category_explain}}</v-card-subtitle>
-              </div>
-            </v-card>
-          </v-hover>
+          <!-- カテゴリ情報カード -->
+          <category-card :category="category" />
         </v-flex>
       </v-layout>
     </v-container>
-    <!-- </div> -->
-    <!-- sm以上であれば非表示、それ以外では表示 -->
-    <div class="hidden-sm-and-up"></div>
   </v-app>
 </template>
 
