@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter, { Route } from 'vue-router'
 import { AxiosRepository } from '@/repository/axiosRepository'
 
-declare module "*.vue" {
+declare module '*.vue' {
     import Vue from 'vue'
-    export default Vue;
+    export default Vue
 }
 
 // TypeScriptでの動作のために型定義

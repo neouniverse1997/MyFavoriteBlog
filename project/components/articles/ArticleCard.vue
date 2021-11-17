@@ -7,7 +7,7 @@
           <!-- 記事を象徴する画像の表示 -->
           <v-img
             height="15rem"
-            :src="imageURL"
+            :src="currentImage"
             :class="{ 'on-hover': hover }"
             hover
             v-bind="attr"
@@ -75,12 +75,17 @@ export default class ArticleCard extends Vue {
   // 現在の表示記事
   private currentArticle: ArticleInterface | null = null;
 
+  // 現在の表示画像（デフォルト画像を用意）
+  private currentImage: string = "/images/main_img.png";
+
   @Prop({ default: {} })
   article!: ArticleInterface;
   imageURL: string;
 
-  get setImageUrl() {
-    return this.$store.state;
+  created() {
+    // 画像を取得できない場合、デフォルト画像を適用
+    this.currentImage =
+      this.imageURL === undefined ? this.currentImage : this.imageURL;
   }
 
   // ボタンを押した時に表示したい詳細記事

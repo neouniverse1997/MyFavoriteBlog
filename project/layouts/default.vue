@@ -7,7 +7,7 @@
       shrink-on-scroll
       fade-img-on-scroll
       prominent
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+      src="/images/main_img.png"
       class="indigo darken-4"
     >
       <v-spacer />
