@@ -1,7 +1,16 @@
 <template>
   <!-- 各メディアごとに応じてURLリンクへ移動するボタンの生成 -->
-  <!-- :href="url" -->
-  <v-btn target="_blank" absolute class="white--text" fab large right bottom color="#191970">
+  <v-btn
+    :href="url"
+    target="_blank"
+    absolute
+    class="white--text"
+    fab
+    large
+    right
+    bottom
+    color="#191970"
+  >
     <!-- ボタンロゴをリンク先メディアによって変更 -->
     <div v-if="media==='marcket'">
       <v-icon>mdi-cart</v-icon>
@@ -26,8 +35,10 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class ButtonToMedia extends Vue {
-  @Prop({ default: {} })
+  @Prop({ default: "none", type: String })
   media!: string;
-  // url!: string;
+
+  @Prop({ default: "", type: String })
+  url!: string;
 }
 </script>

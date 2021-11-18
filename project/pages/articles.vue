@@ -14,7 +14,7 @@
           <article-card :article="article" />
         </v-flex>
         <!-- 記事一覧のページネーション処理 -->
-        <article-pagenation :maxPage="maxPage" :page.sync="page" @pagenationClick="onNextArticles" />
+        <article-pagenation :maxPage="maxPage" :name.sync="page" @pagenationClick="onNextArticles" />
       </v-layout>
     </v-container>
   </v-app>

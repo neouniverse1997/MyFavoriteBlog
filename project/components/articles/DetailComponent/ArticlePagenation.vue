@@ -17,8 +17,7 @@ import { Component, Emit, Vue, Prop, PropSync } from "vue-property-decorator";
 
 @Component
 export default class ButtonToMedia extends Vue {
-  // PropSyncに変更する
-  @Prop({ type: Number })
+  @PropSync("name", { type: Number })
   page: number;
 
   @Prop({ type: Number })
