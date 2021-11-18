@@ -3,7 +3,7 @@
   <v-dialog v-model="dialog" max-width="30rem" scrollable :retain-focus="false">
     <template v-slot:activator="{ on, attr }">
       <v-hover v-slot:default="{ hover }">
-        <v-card class="ma-2 mx-2" height="22rem">
+        <v-card class="mx-2 mb-15" height="22rem">
           <!-- 記事を象徴する画像の表示 -->
           <v-img
             height="15rem"
@@ -36,7 +36,7 @@
       </v-hover>
     </template>
     <!-- 記事をクリックした時に表示される詳細ダイアログ -->
-    <article-dialog :current_article="currentArticle" :dialog="dialog" />
+    <article-dialog :current_article="currentArticle" :name.sync="dialog" />
   </v-dialog>
 </template>
 
@@ -80,12 +80,13 @@ export default class ArticleCard extends Vue {
 
   @Prop({ default: {} })
   article!: ArticleInterface;
-  imageURL: string;
 
   created() {
     // 画像を取得できない場合、デフォルト画像を適用
     this.currentImage =
-      this.imageURL === undefined ? this.currentImage : this.imageURL;
+      this.article.image === undefined
+        ? this.currentImage
+        : this.article.image.url;
   }
 
   // ボタンを押した時に表示したい詳細記事

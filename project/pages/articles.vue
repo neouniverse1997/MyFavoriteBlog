@@ -13,9 +13,11 @@
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
           <article-card :article="article" />
         </v-flex>
-        <!-- 記事一覧のページネーション処理 -->
-        <article-pagenation :maxPage="maxPage" :name.sync="page" @pagenationClick="onNextArticles" />
       </v-layout>
+      <!-- 記事一覧のページネーション処理 -->
+      <div class="index-pagenation">
+        <article-pagenation :maxPage="maxPage" :name.sync="page" @pagenationClick="onNextArticles" />
+      </div>
     </v-container>
   </v-app>
 </template>
@@ -46,6 +48,12 @@
       color: #1a237e;
     }
   }
+
+  // ページネーション部分
+  .index-pagenation {
+    margin: auto;
+    margin-top: 10rem;
+  }
 }
 </style>
 
@@ -69,7 +77,7 @@ export default class Article extends Vue {
   private articles: ArticleInterface[] = [];
 
   // 最大取得件数
-  private limit: number = 3;
+  private limit: number = 6;
 
   // 記事数（取得できない時は0）
   private sum: number = 0;

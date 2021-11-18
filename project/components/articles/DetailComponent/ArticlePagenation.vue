@@ -1,5 +1,6 @@
 <template>
   <v-pagination
+    v-if="maxPage>0"
     variant="outlined"
     shape="rounded"
     color="secondary"
