@@ -58,6 +58,7 @@
 </style>
 
 <script lang="ts">
+import { categoryModule } from "../store/categoryInfo";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { CategoryInterface, ResponseInterface } from "../types/interface";
 
@@ -86,6 +87,7 @@ export default class Category extends Vue {
         return a.category_id > b.category_id ? 1 : -1;
       });
       this.categories = result;
+      categoryModule.setCategoryList(this.categories.map(obj => obj.title));
     };
     getCategory();
   }

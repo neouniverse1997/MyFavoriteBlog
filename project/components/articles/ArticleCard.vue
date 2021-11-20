@@ -7,7 +7,7 @@
           <!-- 記事を象徴する画像の表示 -->
           <v-img
             height="15rem"
-            :src="currentImage"
+            :src="defaultImage"
             :class="{ 'on-hover': hover }"
             hover
             v-bind="attr"
@@ -28,10 +28,12 @@
             <article-button-to-media :url="article.url" :media="article.url_to_media[0]" />
           </div>
           <!-- 記事のタイトル・著者の表示 -->
-          <div class="card-title-text">{{article.title}}</div>
-          <div v-if="article.generator!==undefined">
-            <v-card-subtitle>著者：{{article.generator}}</v-card-subtitle>
-          </div>
+          <v-container class="overflow-y-auto article-contents">
+            <div class="card-title-text">{{article.title}}</div>
+            <div v-if="article.generator!==undefined">
+              <v-card-subtitle>著者：{{article.generator}}</v-card-subtitle>
+            </div>
+          </v-container>
         </v-card>
       </v-hover>
     </template>
@@ -41,15 +43,19 @@
 </template>
 
 <style lang="scss" scoped>
-// カードのタイトル部分
-.card-title-text {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 0.8rem;
-  font-weight: 500;
-  line-height: 2rem;
-  padding: 0.4rem 0.75rem 0.4rem 0.7rem;
+.article-contents {
+  max-height: 70px;
+
+  // カードのタイトル部分
+  .card-title-text {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 2rem;
+    padding: 0.4rem 0.75rem 0.4rem 0.7rem;
+  }
 }
 
 // hover時の画像の挙動
@@ -75,17 +81,25 @@ export default class ArticleCard extends Vue {
   // 現在の表示記事
   private currentArticle: ArticleInterface | null = null;
 
-  // 現在の表示画像（デフォルト画像を用意）
-  private currentImage: string = "/images/main_img.png";
+  // デフォルト表示画像
+  private defaultImage: string = "/images/main_img.png";
 
+  // カテゴリ記事
+  @Prop({ default: {} })
+  categoryImage!: string;
+
+  // 表示記事
   @Prop({ default: {} })
   article!: ArticleInterface;
 
   created() {
+    this.defaultImage =
+      this.categoryImage === undefined ? this.defaultImage : this.categoryImage;
+
     // 画像を取得できない場合、デフォルト画像を適用
-    this.currentImage =
+    this.defaultImage =
       this.article.image === undefined
-        ? this.currentImage
+        ? this.defaultImage
         : this.article.image.url;
   }
 

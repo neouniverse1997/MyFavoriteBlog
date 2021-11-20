@@ -11,7 +11,7 @@
       <v-layout wrap>
         <!-- 記事の一覧画面 -->
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
-          <article-card :article="article" />
+          <article-card :article="article" :categoryImage="categoryImage" />
         </v-flex>
       </v-layout>
       <!-- 記事一覧のページネーション処理 -->
@@ -58,6 +58,7 @@
 </style>
 
 <script lang="ts">
+import { categoryModule } from "../store/categoryInfo";
 import { ArticleInterface, ResponseInterface } from "../types/interface";
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { AxiosRepository } from "../repository/axiosRepository";
@@ -94,6 +95,9 @@ export default class Article extends Vue {
   // 取得したいカテゴリ
   private categoryTitle: string | string[] | null;
 
+  // カテゴリ画像
+  private categoryImage: string = "";
+
   // URI作成関数
   generateURI(query: string): string {
     return `get_articles${query}`;
@@ -118,7 +122,7 @@ export default class Article extends Vue {
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     this.categoryQuery =
-      typeof this.categoryTitle === "string" ? this.categoryTitle : null;
+      typeof this.categoryTitle === "string" ? this.categoryTitle : "ALL";
 
     let api_query: string = this.generateQuery(this.categoryQuery);
 
@@ -132,13 +136,14 @@ export default class Article extends Vue {
       this.articles = await res.contents;
       this.sum = await res.totalCount;
       this.maxPage = Math.ceil(this.sum / this.limit);
+      this.categoryImage = categoryModule.currentCategoryImage;
     };
 
     getArticles();
   }
 
   // ページング処理
-  onNextArticles(number) {
+  onNextArticles(number: number) {
     let api_query: string = this.generateQuery(this.categoryQuery);
 
     // 共通Axiosレポジトリより取得関数実行関数

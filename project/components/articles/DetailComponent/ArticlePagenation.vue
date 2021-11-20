@@ -25,7 +25,7 @@ export default class ButtonToMedia extends Vue {
   maxPage: number;
 
   @Emit("pagenationClick")
-  pagenationClick(number) {
+  pagenationClick(number: number): number {
     return number;
   }
 }

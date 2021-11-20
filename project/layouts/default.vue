@@ -1,18 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-      shrink-on-scroll
-      fade-img-on-scroll
-      prominent
-      src="/images/main_img.png"
-      class="indigo darken-4"
-    >
-      <v-spacer />
+    <v-app-bar app class="indigo darken-4">
       <template v-slot:extension>
-        <v-tabs fixed-tabs centered icons-and-text slider-color="yellow" align-with-title>
+        <v-tabs fixed-tabs v-model="tab" dark align-with-title>
           <v-tab v-for="(item, i) in items" :key="i" :to="item.to" router exact>{{ item.title }}</v-tab>
         </v-tabs>
       </template>
