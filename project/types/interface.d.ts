@@ -1,4 +1,4 @@
-// 記事を返した時のオブジェクト型
+// microCMSからレスポンス型
 export interface ResponseInterface<T> {
     contents: Array<T>,
     limit: number,
@@ -23,7 +23,7 @@ export interface CommonInterface {
     updatedAt: Date;
 }
 
-// 記事のオブジェクト型(article.vue)
+// 記事のオブジェクト型
 export interface ArticleInterface extends CommonInterface {
     contents: string;
     category: string;
@@ -32,11 +32,18 @@ export interface ArticleInterface extends CommonInterface {
     url?: string;
 }
 
-// カテゴリのオブジェクト型(category.vue)
+// カテゴリのオブジェクト型
 export interface CategoryInterface extends CommonInterface {
     // 文字列型ID
     category_id: number;
     category_explain: string;
+}
+
+// カテゴリごとの画像-名前の対応付け（CategoryInterfaceと比較して冗長的かも？）
+// 記事のサムネ画像表示にカテゴリ名+カテゴリ画像を使用するケース
+export interface CategoryImageInterface {
+    title: string,
+    image?: string;
 }
 
 // エラーを返した時の型

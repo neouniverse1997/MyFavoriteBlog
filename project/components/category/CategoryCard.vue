@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import Vuex from "vuex";
-import { categoryModule } from "../../store/categoryInfo";
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { CategoryInterface } from "../../types/interface";
 
@@ -32,10 +31,6 @@ export default class CategoryCard extends Vue {
   category!: CategoryInterface;
 
   onNextCategoryPage() {
-    // Storeに画像URLを保存
-    const defaultImage: string = this.category.image.url;
-    categoryModule.setImage(defaultImage);
-
     this.$router.push({
       name: "articles",
       params: { title: this.category.title }

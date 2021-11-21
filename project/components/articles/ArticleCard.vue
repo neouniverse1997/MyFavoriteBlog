@@ -71,7 +71,11 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { ArticleInterface } from "../../types/interface";
+import {
+  ArticleInterface,
+  CategoryImageInterface
+} from "../../types/interface";
+import { categoryModule } from "../../store/categoryStore";
 
 @Component
 export default class ArticleCard extends Vue {
@@ -86,17 +90,23 @@ export default class ArticleCard extends Vue {
 
   // カテゴリ記事
   @Prop({ default: {} })
-  categoryImage!: string;
+  categoryImageArray!: CategoryImageInterface[];
 
   // 表示記事
   @Prop({ default: {} })
   article!: ArticleInterface;
 
   created() {
-    this.defaultImage =
-      this.categoryImage === undefined ? this.defaultImage : this.categoryImage;
+    // Storeからカテゴリ画像を取得
+    let categoryImage = this.categoryImageArray.filter(
+      obj => obj.title === this.article.category[0]
+    );
 
-    // 画像を取得できない場合、デフォルト画像を適用
+    // カテゴリ画像を取得できない場合、デフォルト画像を適用
+    this.defaultImage =
+      categoryImage.length == 0 ? this.defaultImage : categoryImage[0].image;
+
+    // 記事から画像を取得できない場合、デフォルト画像を適用
     this.defaultImage =
       this.article.image === undefined
         ? this.defaultImage

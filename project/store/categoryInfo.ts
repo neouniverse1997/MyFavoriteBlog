@@ -1,9 +1,11 @@
 import store from './store'
+// import { CategoryImageInterface } from '../types/interface'
 import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
 
-export interface CategoryStoreInterface {
-    categoryList: string[]
-    currentCategoryImage: string
+// export { CategoryImageInterface }
+export interface CategoryImageInterface {
+    title: string,
+    image?: string;
 }
 
 // 'vuex-module-decorators'の活用ドキュメント
@@ -11,24 +13,24 @@ export interface CategoryStoreInterface {
 // 参考
 // https://re-engines.com/2019/07/16/vuex-module-decorators%E3%81%A8typescript%E3%81%A7vuex%E3%82%92%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%81%AB%E6%9B%B8%E3%81%8F/
 
-@Module({ dynamic: true, store, name: 'categoryInfo' })
+@Module({ dynamic: true, store, name: 'categoryStore' })
 class CategoryStore extends VuexModule {
 
     // State, Getterの書き方
     // https://championswimmer.in/vuex-module-decorators/pages/core/getters.html
-    categoryList: string[] = [];
-    currentCategoryImage: string = "";
+    categoryImageArray: CategoryImageInterface[] = [];
+    currentCategory: string = "ALL";
 
     // Mutationの書き方
     // https://championswimmer.in/vuex-module-decorators/pages/core/mutations.html
     @Mutation
-    setImage(image: string) {
-        this.currentCategoryImage = image
+    setCategoryImageArray(categoryImageArray: CategoryImageInterface[]) {
+        this.categoryImageArray = categoryImageArray;
     }
 
     @Mutation
-    setCategoryList(categoryList: string[]) {
-        this.categoryList = categoryList
+    setCurrentCategory(currentCategory: string) {
+        this.currentCategory = currentCategory
     }
 }
 

@@ -11,7 +11,7 @@
       <v-layout wrap>
         <!-- 記事の一覧画面 -->
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
-          <article-card :article="article" :categoryImage="categoryImage" />
+          <article-card :article="article" :categoryImageArray="categoryImageArray" />
         </v-flex>
       </v-layout>
       <!-- 記事一覧のページネーション処理 -->
@@ -58,8 +58,12 @@
 </style>
 
 <script lang="ts">
-import { categoryModule } from "../store/categoryInfo";
-import { ArticleInterface, ResponseInterface } from "../types/interface";
+import { categoryModule } from "../store/categoryStore";
+import {
+  ArticleInterface,
+  ResponseInterface,
+  CategoryImageInterface
+} from "../types/interface";
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { AxiosRepository } from "../repository/axiosRepository";
 import VueRouter, { Route } from "vue-router";
@@ -74,7 +78,7 @@ declare module "vue/types/vue" {
 
 @Component
 export default class Article extends Vue {
-  // 取得記事一覧を定義
+  // 取得記事一覧
   private articles: ArticleInterface[] = [];
 
   // 最大取得件数
@@ -89,14 +93,11 @@ export default class Article extends Vue {
   // 最大ページ
   private maxPage: number | null = null;
 
-  // 取得タグ
-  private categoryQuery: string | null = null;
-
   // 取得したいカテゴリ
-  private categoryTitle: string | string[] | null;
+  private categoryTitle: string | null;
 
-  // カテゴリ画像
-  private categoryImage: string = "";
+  // カテゴリ情報（画像=名前のみ）
+  private categoryImageArray: CategoryImageInterface[];
 
   // URI作成関数
   generateURI(query: string): string {
@@ -104,9 +105,9 @@ export default class Article extends Vue {
   }
 
   // クエリ作成関数
-  generateQuery(categoryQuery: string | null): string {
+  generateQuery(categoryQuery: string): string {
     let query: string =
-      this.categoryQuery === null
+      categoryQuery === "ALL"
         ? `?limit=${this.limit}&offset=${(this.page - 1) *
             this.limit}&orders=publishedAt`
         : `?filters=category[contains]${categoryQuery}&limit=${
@@ -116,15 +117,21 @@ export default class Article extends Vue {
   }
 
   created() {
-    // カテゴリIDを取得
-    this.categoryTitle = this.$route.params.title;
-
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
-    this.categoryQuery =
-      typeof this.categoryTitle === "string" ? this.categoryTitle : "ALL";
+    this.categoryTitle =
+      typeof this.$route.params.title === "string"
+        ? this.$route.params.title
+        : categoryModule.currentCategory;
 
-    let api_query: string = this.generateQuery(this.categoryQuery);
+    // クエリ作成
+    let api_query: string = this.generateQuery(this.categoryTitle);
+
+    // カテゴリを保存
+    categoryModule.setCurrentCategory(this.categoryTitle);
+
+    // Storeから全カテゴリ情報（画像=名前）を取得
+    this.categoryImageArray = categoryModule.categoryImageArray;
 
     // 共通Axiosレポジトリより取得関数実行関数
     // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
@@ -134,9 +141,10 @@ export default class Article extends Vue {
         this.generateURI(api_query)
       );
       this.articles = await res.contents;
+      // 該当記事数の最大数
       this.sum = await res.totalCount;
+      // ページング処理の最大ページ数
       this.maxPage = Math.ceil(this.sum / this.limit);
-      this.categoryImage = categoryModule.currentCategoryImage;
     };
 
     getArticles();
@@ -144,7 +152,7 @@ export default class Article extends Vue {
 
   // ページング処理
   onNextArticles(number: number) {
-    let api_query: string = this.generateQuery(this.categoryQuery);
+    let api_query: string = this.generateQuery(this.categoryTitle);
 
     // 共通Axiosレポジトリより取得関数実行関数
     // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents

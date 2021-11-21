@@ -58,9 +58,13 @@
 </style>
 
 <script lang="ts">
-import { categoryModule } from "../store/categoryInfo";
+import { categoryModule } from "../store/categoryStore";
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { CategoryInterface, ResponseInterface } from "../types/interface";
+import {
+  CategoryInterface,
+  ResponseInterface,
+  CategoryImageInterface
+} from "../types/interface";
 
 @Component
 export default class Category extends Vue {
@@ -69,6 +73,9 @@ export default class Category extends Vue {
 
   // 取得カテゴリ一覧を定義
   private categories: CategoryInterface[] = [];
+
+  // 取得カテゴリ一覧（画像-名前のみ）を定義
+  private categoryImageArray: CategoryImageInterface[] = [];
 
   created() {
     // 一覧表示に向けてカテゴリを取得
@@ -86,8 +93,16 @@ export default class Category extends Vue {
       ): number {
         return a.category_id > b.category_id ? 1 : -1;
       });
+
+      // カテゴリ情報（名前,画像）をStoreに保存
       this.categories = result;
-      categoryModule.setCategoryList(this.categories.map(obj => obj.title));
+      this.categoryImageArray = this.categories.map(obj => {
+        let rObj: CategoryImageInterface = { title: "", image: "" };
+        rObj.title = obj.title;
+        rObj.image = obj.image !== undefined ? obj.image.url : "";
+        return rObj;
+      });
+      categoryModule.setCategoryImageArray(this.categoryImageArray);
     };
     getCategory();
   }
