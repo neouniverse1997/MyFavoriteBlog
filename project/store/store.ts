@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { CategoryImageInterface } from './categoryInfo'
 
 Vue.use(Vuex)
 

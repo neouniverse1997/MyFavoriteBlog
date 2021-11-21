@@ -1,6 +1,12 @@
 <template>
   <v-app>
     <v-container fluid>
+      <!-- タグボタン列挙表示 -->
+      <v-layout wrap>
+        <div v-for="category in categoryImageArray" v-bind:key="category.title">
+          <article-category-button :title="category.title" />
+        </div>
+      </v-layout>
       <!-- 選択カテゴリの表示 -->
       <div class="index-title">
         <div class="index-title-text">
@@ -8,8 +14,8 @@
           <div class="index-category-text">{{categoryTitle}}</div>
         </div>
       </div>
+      <!-- 記事の一覧画面 -->
       <v-layout wrap>
-        <!-- 記事の一覧画面 -->
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
           <article-card :article="article" :categoryImageArray="categoryImageArray" />
         </v-flex>
@@ -35,8 +41,8 @@
 
   .index-title-text {
     text-align: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
     font: 1em "Verdana";
     color: black;
 
