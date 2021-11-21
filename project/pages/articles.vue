@@ -64,7 +64,7 @@
 </style>
 
 <script lang="ts">
-import { categoryModule } from "../store/categoryStore";
+import { categoryModule } from "../store/categoryInfo";
 import {
   ArticleInterface,
   ResponseInterface,
@@ -97,10 +97,10 @@ export default class Article extends Vue {
   private page: number = 1;
 
   // 最大ページ
-  private maxPage: number | null = null;
+  private maxPage: number = 0;
 
   // 取得したいカテゴリ
-  private categoryTitle: string | null;
+  private categoryTitle: string = "ALL";
 
   // カテゴリ情報（画像=名前のみ）
   private categoryImageArray: CategoryImageInterface[];
@@ -121,7 +121,6 @@ export default class Article extends Vue {
           }&offset=${(this.page - 1) * this.limit}&orders=publishedAt`;
     return query!;
   }
-
   created() {
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined

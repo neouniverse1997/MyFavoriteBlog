@@ -20,6 +20,14 @@
   </v-hover>
 </template>
 
+<style lang="scss" scoped>
+.card-title-text {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+</style>
+
 <script lang="ts">
 import Vuex from "vuex";
 import { Component, Vue, Prop } from "vue-property-decorator";

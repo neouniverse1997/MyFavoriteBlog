@@ -11,7 +11,7 @@
       large
       right
       bottom
-      arget="_blank"
+      target="_blank"
       color="#191970"
     >
       <!-- ボタンロゴをリンク先メディアによって変更 -->

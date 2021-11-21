@@ -18,9 +18,11 @@
             <v-expand-transition>
               <div
                 v-if="hover"
-                class="d-flex transition-fast-in-fast-out v-card--reveal text-h4 yellow--text indigo darken-4"
+                class="d-flex transition-fast-in-fast-out v-card--reveal indigo darken-4"
                 style="height: 100%;"
-              >CLICK</div>
+              >
+                <a class="expand-text">CLICK</a>
+              </div>
             </v-expand-transition>
           </v-img>
           <!-- 記事に付随するリンクボタン -->
@@ -43,6 +45,12 @@
 </template>
 
 <style lang="scss" scoped>
+.expand-text {
+  color: white;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
 .article-contents {
   max-height: 70px;
 
@@ -75,7 +83,7 @@ import {
   ArticleInterface,
   CategoryImageInterface
 } from "../../types/interface";
-import { categoryModule } from "../../store/categoryStore";
+import { categoryModule } from "../../store/categoryInfo";
 
 @Component
 export default class ArticleCard extends Vue {
@@ -86,7 +94,7 @@ export default class ArticleCard extends Vue {
   private currentArticle: ArticleInterface | null = null;
 
   // デフォルト表示画像
-  private defaultImage: string = "/images/main_img.png";
+  private defaultImage?: string = "/images/main_img.png";
 
   // カテゴリ記事
   @Prop({ default: {} })

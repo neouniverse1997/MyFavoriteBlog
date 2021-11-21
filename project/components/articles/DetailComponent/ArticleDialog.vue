@@ -1,6 +1,6 @@
 <template>
   <!-- ボタン押した時に表示されるダイアログ　/ 記事のコンテンツが表示される -->
-  <v-card v-if="current_article" class="pa-1 nonhover">
+  <v-card v-if="current_article" class="pa-1 indigo darken-4 white--text">
     <div class="dialog-title-block">
       <span class="dialog-title-inline">{{current_article.title}}</span>
     </div>
@@ -23,11 +23,15 @@
 <style lang="scss" scoped>
 .dialog-title-block {
   margin: auto;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   .dialog-title-inline {
-    color: black;
+    color: white;
+    font-weight: 500;
+    font-size: 1.5rem;
   }
 }
 

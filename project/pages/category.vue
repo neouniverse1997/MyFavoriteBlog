@@ -58,7 +58,7 @@
 </style>
 
 <script lang="ts">
-import { categoryModule } from "../store/categoryStore";
+import { categoryModule } from "../store/categoryInfo";
 import { Vue, Component, Prop } from "vue-property-decorator";
 import {
   CategoryInterface,

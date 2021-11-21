@@ -46,13 +46,15 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
+Component.registerHooks(["beforeRouteUpdate"]);
+
 @Component
 export default class ArticleCategoryButton extends Vue {
   // カテゴリ
   @Prop({ default: {} })
   title!: string;
 
-  onNextCategoryPage(title) {
+  onNextCategoryPage(title: string) {
     this.$router.push({
       name: "articles",
       params: { title: this.title }
