@@ -40,8 +40,8 @@ export default class CategoryCard extends Vue {
 
   onNextCategoryPage() {
     this.$router.push({
-      name: "articles",
-      params: { title: this.category.title }
+      name: `articles-articles`,
+      params: { articles: this.category.title }
     });
   }
 }

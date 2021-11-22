@@ -64,14 +64,14 @@
 </style>
 
 <script lang="ts">
-import { categoryModule } from "../store/categoryInfo";
+import { categoryModule } from "../../store/categoryInfo";
 import {
   ArticleInterface,
   ResponseInterface,
   CategoryImageInterface
-} from "../types/interface";
+} from "../../types/interface";
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { AxiosRepository } from "../repository/axiosRepository";
+import { AxiosRepository } from "../../repository/axiosRepository";
 import VueRouter, { Route } from "vue-router";
 
 declare module "vue/types/vue" {
@@ -125,8 +125,8 @@ export default class Article extends Vue {
     // クエリ条件指定
     // https://typescript-jp.gitbook.io/deep-dive/recap/null-undefined
     this.categoryTitle =
-      typeof this.$route.params.title === "string"
-        ? this.$route.params.title
+      typeof this.$route.params.articles === "string"
+        ? this.$route.params.articles
         : categoryModule.currentCategory;
 
     // クエリ作成

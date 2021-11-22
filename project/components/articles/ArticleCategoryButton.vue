@@ -36,7 +36,7 @@
       left top,
       right top,
       from(#1a237e),
-      to(#009efd)
+      to(#8a9ba7)
     );
     border-bottom: 5px solid #009efd;
   }
@@ -44,7 +44,7 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 Component.registerHooks(["beforeRouteUpdate"]);
 
@@ -56,8 +56,8 @@ export default class ArticleCategoryButton extends Vue {
 
   onNextCategoryPage(title: string) {
     this.$router.push({
-      name: "articles",
-      params: { title: this.title }
+      name: `articles-articles`,
+      params: { articles: this.title }
     });
   }
 }
