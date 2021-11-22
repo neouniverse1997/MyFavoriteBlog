@@ -2,8 +2,8 @@
   <v-app>
     <v-app-bar app class="indigo darken-4">
       <template v-slot:extension>
-        <v-tabs dark align-with-title>
-          <v-tab v-for="(item, i) in items" :key="i" :to="item.to" router exact>{{ item.title }}</v-tab>
+        <v-tabs fixed-tabs dark>
+          <v-tab v-for="(item, i) in items" :key="i" :to="item.to" router>{{ item.title }}</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
@@ -13,7 +13,7 @@
       </v-container>
     </v-main>
     <v-footer :absolute="!fixed" app class="indigo darken-4">
-      <span class="yellow--text">&copy; {{ new Date().getFullYear() }}</span>
+      <span class="white--text">とある個人の嗜好遍歴</span>
     </v-footer>
   </v-app>
 </template>
@@ -27,12 +27,10 @@ export default {
       fixed: false,
       items: [
         {
-          icon: "mdi-apps",
-          title: "Profile",
+          title: "PROFILE",
           to: "/"
         },
         {
-          icon: "mdi-chart-bubble",
           title: "Categories",
           to: "/category"
         }
