@@ -2,7 +2,11 @@
   <v-app>
     <v-app-bar app class="indigo darken-4">
       <div class="app-title">
-        <div class="app-title-text">とある個人の出力遍歴</div>
+        <div class="app-title-text">
+          とある
+          <span style="font-size: 1.4rem;">個人</span>の
+          <span style="font-size: 1.2rem;">嗜好遍歴</span>
+        </div>
       </div>
       <template v-slot:extension>
         <v-tabs fixed-tabs dark>
@@ -16,12 +20,14 @@
       </v-container>
     </v-main>
     <v-footer :absolute="!fixed" app class="indigo darken-4">
-      <span class="white--text">とある個人の出力遍歴</span>
+      <span class="white--text">とある個人の嗜好遍歴</span>
     </v-footer>
   </v-app>
 </template>
 
 <style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c");
+
 .app-title {
   text-align: center;
   margin: 0 auto;
@@ -29,7 +35,7 @@
   .app-title-text {
     color: white;
     font-weight: 500;
-    font-family: "MS Pゴシック";
+    font-family: "M PLUS Rounded 1c", sans-serif;
   }
 }
 </style>
@@ -54,7 +60,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "NEO UNIVERSE ch"
+      title: "とある個人の嗜好遍歴"
     };
   }
 };

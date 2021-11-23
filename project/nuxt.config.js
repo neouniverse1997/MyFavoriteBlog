@@ -18,8 +18,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - myblog',
-    title: 'myblog',
+    titleTemplate: '%s - とある個人の嗜好遍歴',
+    title: 'とある個人の嗜好遍歴',
     htmlAttrs: {
       lang: 'en'
     },

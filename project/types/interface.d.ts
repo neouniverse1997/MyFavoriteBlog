@@ -8,8 +8,6 @@ export interface ResponseInterface<T> {
 
 // 共通のオブジェクト型
 export interface CommonInterface {
-    id: string;
-    title: string;
     image:
     | {
         url: string;
@@ -25,6 +23,8 @@ export interface CommonInterface {
 
 // 記事のオブジェクト型
 export interface ArticleInterface extends CommonInterface {
+    id: string;
+    title: string;
     contents: string;
     category: string;
     generator?: string;
@@ -34,9 +34,25 @@ export interface ArticleInterface extends CommonInterface {
 
 // カテゴリのオブジェクト型
 export interface CategoryInterface extends CommonInterface {
-    // 文字列型ID
+    id: string;
+    title: string;
+
     category_id: number;
     category_explain: string;
+}
+
+// ユーザーのオブジェクト型
+export interface UserInterface extends CommonInterface {
+    name?: string;
+    introduce: string;
+    twitter?: string;
+    github?: string;
+    note?: string;
+    youtube?: string;
+    zenn?: string;
+    blog?: string;
+    other?: string;
+    thissite?: string;
 }
 
 // カテゴリごとの画像-名前の対応付け（CategoryInterfaceと比較して冗長的かも？）

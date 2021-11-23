@@ -22,12 +22,14 @@
       ],
       "@/*": [
         "./*"
+      ],
+      "typeRoots": [
+        "./types/"
       ]
     },
     "types": [
       "@nuxt/types",
       "@types/node",
-      // $axiosを扱いたい
       "@nuxtjs/axios"
     ],
   },
