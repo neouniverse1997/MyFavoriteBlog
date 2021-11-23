@@ -1,23 +1,80 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <v-avatar color="orange" size="256">
-          <!-- <v-img :src="userList.image.url" /> -->
-        </v-avatar>
-      </v-card>
-      <v-card>
-        <!-- <v-card-title class="headline">{{userList.name}}</v-card-title> -->
-        <v-card-text>
-          <!-- <p>{{userList.introduce}}</p> -->
-          <v-spacer />
-          <v-layout wrap>
-            <user-to-media-button />
-            <user-to-media-button />
-            <user-to-media-button />
-            <user-to-media-button />
-          </v-layout>
-        </v-card-text>
+      <v-card class="logo pa-4 d-flex justify-center">
+        <v-flex xs12>
+          <div v-if="userList!=null">
+            <user-introduce
+              :image_url="userList.image.url"
+              :name="userList.name"
+              :introduce="userList.introduce"
+            />
+          </div>
+          <div v-else>
+            <user-introduce image_url="/images/main_img.png" name introduce />
+          </div>
+          <v-card-text>
+            <div v-if="userList!=null">
+              <v-spacer />
+              <v-layout wrap>
+                <v-flex xs6>
+                  <div v-if="userList.twitter!=undefined">
+                    <user-to-media-button
+                      :url="userList.twitter"
+                      mediaName="Twitter"
+                      icon="mdi-twitter"
+                    />
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div v-if="userList.github!=undefined">
+                    <user-to-media-button
+                      :url="userList.github"
+                      mediaName="Github"
+                      icon="mdi-github"
+                    />
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div v-if="userList.youtube!=undefined">
+                    <user-to-media-button
+                      :url="userList.youtube"
+                      mediaName="Youtube"
+                      icon="mdi-youtube"
+                    />
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div v-if="userList.note!=undefined">
+                    <user-to-media-button
+                      :url="userList.note"
+                      mediaName="Note"
+                      icon="mdi-note-edit"
+                    />
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div v-if="userList.zenn!=undefined">
+                    <user-to-media-button
+                      :url="userList.zenn"
+                      mediaName="Zenn"
+                      icon="mdi-code-greater-than"
+                    />
+                  </div>
+                </v-flex>
+                <v-flex xs6>
+                  <div v-if="userList.blog!=undefined">
+                    <user-to-media-button
+                      :url="userList.blog"
+                      mediaName="はてなブログ"
+                      icon="mdi-pencil"
+                    />
+                  </div>
+                </v-flex>
+              </v-layout>
+            </div>
+          </v-card-text>
+        </v-flex>
       </v-card>
     </v-col>
   </v-row>
@@ -44,12 +101,8 @@ export default class Category extends Vue {
       );
       try {
         this.userList = res.contents[0];
-        console.log(this.userList.name);
-        console.log(this.userList.image.url);
         userModule.setUser(this.userList);
-      } catch {
-        console.log("Error");
-      }
+      } catch {}
     };
 
     this.userList = userModule.userStore;
@@ -59,3 +112,4 @@ export default class Category extends Vue {
   }
 }
 </script>
+

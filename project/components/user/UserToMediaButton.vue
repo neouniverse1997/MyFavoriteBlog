@@ -1,26 +1,25 @@
 <template>
-  <v-flex xs12 sm6>
-    <div class="media-to-button-area">
-      <div class="media-to-button">
-        <v-hover v-slot="{ hover }" open-delay="200">
-          <v-btn
-            :elevation="hover ? 20 : 2"
-            :class="{ 'on-hover': hover }"
-            class="white--text"
-            x-large
-            fab
-            target="_blank"
-            color="#191970"
-          >
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
-        </v-hover>
-      </div>
-      <div class="media-to-button-name">
-        <span>Github</span>
-      </div>
+  <div class="media-to-button-area">
+    <div class="media-to-button">
+      <v-hover v-slot="{ hover }" open-delay="200">
+        <v-btn
+          :href="url"
+          :elevation="hover ? 20 : 2"
+          :class="{ 'on-hover': hover }"
+          class="white--text"
+          x-large
+          fab
+          target="_blank"
+          color="#191970"
+        >
+          <v-icon>{{icon}}</v-icon>
+        </v-btn>
+      </v-hover>
     </div>
-  </v-flex>
+    <div class="media-to-button-name">
+      <span>{{mediaName}}</span>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -38,3 +37,19 @@
   }
 }
 </style>
+
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+
+@Component
+export default class UserMediaButton extends Vue {
+  @Prop({ default: { type: String } })
+  url: string;
+
+  @Prop({ default: { type: String } })
+  icon: string;
+
+  @Prop({ default: { type: String } })
+  mediaName: string;
+}
+</script>
