@@ -11,7 +11,7 @@
             />
           </div>
           <div v-else>
-            <user-introduce image_url="/images/main_img.png" name introduce />
+            <user-introduce image_url="/images/loading.png" name introduce />
           </div>
           <div v-if="userList!=null">
             <v-card-text>
