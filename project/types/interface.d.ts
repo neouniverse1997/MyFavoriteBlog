@@ -51,8 +51,6 @@ export interface UserInterface extends CommonInterface {
     youtube?: string;
     zenn?: string;
     blog?: string;
-    other?: string;
-    thissite?: string;
 }
 
 // カテゴリごとの画像-名前の対応付け（CategoryInterfaceと比較して冗長的かも？）

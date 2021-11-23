@@ -13,8 +13,8 @@
           <div v-else>
             <user-introduce image_url="/images/main_img.png" name introduce />
           </div>
-          <v-card-text>
-            <div v-if="userList!=null">
+          <div v-if="userList!=null">
+            <v-card-text>
               <v-spacer />
               <v-layout wrap>
                 <v-flex xs6>
@@ -72,13 +72,49 @@
                   </div>
                 </v-flex>
               </v-layout>
-            </div>
-          </v-card-text>
+            </v-card-text>
+            <v-card-text>
+              <v-divider class="mx-4"></v-divider>
+              <v-flex xs12>
+                <div class="site-introduce">
+                  <p class="site-introduce-txt">
+                    「とある個人の嗜好遍歴」は他人に自身の事をもっと知って頂こうと思い、
+                    制作した「趣味全振り」のポートフォーリオです。
+                    技術スタックはNuxt+Vue+microCMS+Dockerです。
+                    microCMS上からデータの更新が可能ですので、
+                    以下のGithubのリポジトリからREADMEに沿って頂くと、
+                    誰でも使用可能なプラットフォームになっております。
+                  </p>
+                </div>
+                <user-to-media-button
+                  url="https://github.com/neouniverse1997/MyFavoriteBlog"
+                  mediaName="This Website"
+                  icon="mdi-github"
+                />
+              </v-flex>
+            </v-card-text>
+          </div>
         </v-flex>
       </v-card>
     </v-col>
   </v-row>
 </template>
+
+<style lang="scss" scoped>
+.site-introduce {
+  margin: auto;
+  margin: 1rem 1rem 1rem 1rem;
+
+  .site-introduce-txt {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    font-size: 1em;
+    color: #444444;
+    font-weight: 100;
+    text-align: left;
+  }
+}
+</style>
 
 <script lang="ts">
 import { userModule } from "../store/userInfo";
