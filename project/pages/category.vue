@@ -4,10 +4,8 @@
       <div class="index-title">
         <div class="index-title-text">CATEGORIES</div>
       </div>
-      <!-- wrap = 要素が幅の限り横に並べるようなレイアウト -->
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="category in categories" v-bind:key="category.category_id">
-          <!-- カテゴリ情報カード -->
           <category-card :category="category" />
         </v-flex>
       </v-layout>
@@ -16,16 +14,11 @@
 </template>
 
 <style scoped lang="scss">
-/* これは CSS コメントです
-複数行に分割できます。 
-以下のテンプレートごとに分割しましょう */
-
 // カード
 .v-card {
   transition: opacity 0.4s ease-in-out;
 }
 
-// hoverしていないカードはopacity0.6
 .v-card:not(.on-hover) {
   opacity: 0.6;
 }
@@ -54,7 +47,6 @@
   line-height: 2rem;
   padding: 0.3rem 0.75rem 0.3rem 0.7rem;
 }
-/* || 一般的なスタイル */
 </style>
 
 <script lang="ts">
@@ -74,19 +66,17 @@ export default class Category extends Vue {
   // 取得カテゴリ一覧を定義
   private categories: CategoryInterface[] = [];
 
-  // 取得カテゴリ一覧（画像-名前のみ）を定義
+  // 取得カテゴリペア（画像-名前のみ）を定義
   private categoryImageArray: CategoryImageInterface[] = [];
 
   created() {
-    // 一覧表示に向けてカテゴリを取得
     const getCategory = async () => {
-      // $axiosRepositoryの型が設定されていない（要修正）-> vue-shim.d.tsが読み込めていない
       const res: ResponseInterface<CategoryInterface> = await this.$axiosRepository.get(
         this.query
       );
       let categoryList: CategoryInterface[] = res.contents;
 
-      // 取得順をID順に変更するタスク
+      // カテゴリID順にソート
       let result = categoryList.sort(function(
         a: CategoryInterface,
         b: CategoryInterface

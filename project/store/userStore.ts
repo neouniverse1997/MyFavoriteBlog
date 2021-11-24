@@ -9,4 +9,5 @@ export interface UserStoreState {
     User: UserInterface
 }
 
+// https://github.com/championswimmer/vuex-module-decorators
 export default new Vuex.Store<UserStoreState>({})

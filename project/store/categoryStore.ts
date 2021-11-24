@@ -7,6 +7,5 @@ Vue.use(Vuex)
 export interface CategoryStoreState {
     Category: CategoryImageInterface
 }
-
-
+// https://github.com/championswimmer/vuex-module-decorators
 export default new Vuex.Store<CategoryStoreState>({})

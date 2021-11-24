@@ -1,26 +1,22 @@
 <template>
   <v-app>
     <v-container fluid>
-      <!-- タグボタン列挙表示 -->
       <v-layout wrap>
         <div v-for="category in categoryImageArray" v-bind:key="category.title">
           <article-category-button :title="category.title" />
         </div>
       </v-layout>
-      <!-- 選択カテゴリの表示 -->
       <div class="index-title">
         <div class="index-title-text">
           Category:
           <div class="index-category-text">{{categoryTitle}}</div>
         </div>
       </div>
-      <!-- 記事の一覧画面 -->
       <v-layout wrap>
         <v-flex xs12 sm6 md4 v-for="article in articles" v-bind:key="article.id">
           <article-card :article="article" :categoryImageArray="categoryImageArray" />
         </v-flex>
       </v-layout>
-      <!-- 記事一覧のページネーション処理 -->
       <div class="index-pagenation">
         <article-pagenation :maxPage="maxPage" :name.sync="page" @pagenationClick="onNextArticles" />
       </div>
@@ -35,7 +31,7 @@
   transition: opacity 0.4s ease-in-out;
 }
 
-// ページのタイトル部分
+// ページのタイトル
 .index-title {
   display: block;
 
@@ -90,7 +86,7 @@ export default class Article extends Vue {
   // 最大取得件数
   private limit: number = 6;
 
-  // 記事数（取得できない時は0）
+  // 記事数
   private sum: number = 0;
 
   // 現在のページ
@@ -162,7 +158,6 @@ export default class Article extends Vue {
     // 共通Axiosレポジトリより取得関数実行関数
     // MicroCMSでのAPI使用方法 : https://document.microcms.io/content-api/get-list-contents
     const getArticles = async () => {
-      // $axiosRepositoryの型が設定されていない（要修正）-> Vueファイル内で定義したので解決（綺麗とは言えない）
       const res: ResponseInterface<ArticleInterface> = await this.$axiosRepository.get(
         this.generateURI(api_query)
       );
